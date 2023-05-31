@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate ="user/template">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Task Entry</title>
+</head>
+<body>
+<div layout:fragment = "content1">
+    <div class="container my-3">
+        <h1>Task Entry</h1>
+        <form th:action="@{/user/task/insert}" th:object="${task}" method="post"  >
+
+
+
+            <div class="form-group">
+                <label for="title">TITLE</label>
+                <input type="text" th:field="*{title}" class="form-control"  id="title" placeholder="Enter Task Title">
+            </div>
+
+            <div class="form-group">
+                <label for="detail">DETAIL</label>
+                <textarea th:field="*{detail}" class="form-control"  id="detail" placeholder="Describe Your Task"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="status_id">STATUS</label>
+                <select th:field="${task.status}" name="status_id" id="status_id"  class="form-select">
+                    <option th:each="status:${liststatus}"
+                            th:text="${status.name}"
+                            th:value="${status.id}">
+                    </option>
+                </select>
+            </div>
+
+            <!--
+                        <div class="form-group">
+                            <label for="assignBy">ASSIGN BY</label>
+                            <select th:field="${task.assignBy}" name="assignBy" id="assignBy"  class="form-select">
+                                <option th:each="user:${listuser}"
+                                        th:text="${user.fname}"
+                                        th:value="${user.id}">
+                                </option>
+                            </select>
+                        </div>
+            -->
+            <div class="form-group">
+                <label for="assignTo">ASSIGN TO</label>
+                <select th:field="${task.assignTo}" name="assignTo" id="assignTo"  class="form-select">
+                    <option th:each="user:${listuser}"
+                            th:if=${session.uid!=user.id}
+                            th:text="${user.fname}"
+                            th:value="${user.id}">
+                    </option>
+                </select>
+            </div>
+
+
+
+
+
+            <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+    </div>
+</div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

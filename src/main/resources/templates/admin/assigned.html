@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www/thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate ="admin/admin-template">
+<head>
+  <title>Task List</title>
+</head>
+
+<body class="hold-transition sidebar-mini">
+
+<div layout:fragment = "content1">
+  <div class ="container my-3">
+
+
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+
+                <a href="/admin/task/new"><button class="btn btn-md btn-info my-3">Assign Task</button> </a>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+
+                <table class="table table-bordered table-hover table-striped ">
+                  <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>TITLE</th>
+                    <th>DETAILS</th>
+                    <th>ASSIGN DATE</th>
+                    <th>STATUS</th>
+
+
+                    <th>ASSIGN TO</th>
+                    <th>ACTION</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+
+                  <tr th:each="task : ${list}">
+                    <td th:text ="${task.id}"></td>
+                    <td th:text="${task.title}"></td>
+                    <td th:text="${task.detail}"></td>
+                    <td th:text ="${task.assignDate}"></td>
+                    <td th:text = "${task.status.name}"></td>
+
+                    <td th:text="${task.assignTo.fname}"></td>
+
+
+                    <td style="width:160px">
+
+                      <a th:href="@{/admin/task/editassigned/{id}(id=${task.id})}"><button class="btn btn-sm btn-success">UPDATE</button></a>
+                      <a th:href="@{/admin/task/delete/{id}(id=${task.id})}"  onclick="return confirm('Do you want to delete?')"><button class="btn btn-sm btn-danger">DELETE</button></a>
+
+                    </td>
+                  </tr>
+                  </tbody>
+
+                </table>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+<aside class="control-sidebar control-sidebar-dark">
+</aside>
+
+</body>
+</html>
+
+
+
+
+
+
